@@ -3,5 +3,5 @@ output "backend" {
 }
 
 output "role" {
-  value = vault_aws_secret_backend_role.admin.name
+  value = vault_aws_secret_backend_role.vault-ec2-admin.name
 }

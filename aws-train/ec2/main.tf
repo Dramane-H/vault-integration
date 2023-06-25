@@ -1,3 +1,19 @@
+
+data "vault_aws_access_credentials" "creds" {
+  backend = "aws"
+  role    = var.name
+  region  = "${var.region}"
+}
+
+resource "aws_instance" "ec2-vault-instance" {
+  ami           = "${var.instance_ami}"
+  instance_type = "${var.instance_type}"
+  tags = {
+    Name = "ec2-vault-instance"
+  }
+}
+
+
 data "aws_ami" "amazon_linux" {
   most_recent = true
 
