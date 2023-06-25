@@ -1,7 +1,7 @@
 
 data "vault_aws_access_credentials" "creds" {
   backend = "aws"
-  role    = "vault-ec2-admin"
+  role    = data.vault_aws_secret_backend.aws.path
   region  = var.region
 }
 
