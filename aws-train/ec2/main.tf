@@ -1,18 +1,9 @@
 
 data "vault_aws_access_credentials" "creds" {
   backend = "aws"
-  role    = var.name
-  region  = "${var.region}"
+  role    = "vault-ec2-admin"
+  region  = var.region
 }
-
-resource "aws_instance" "ec2-vault-instance" {
-  ami           = "${var.instance_ami}"
-  instance_type = "${var.instance_type}"
-  tags = {
-    Name = "ec2-vault-instance"
-  }
-}
-
 
 data "aws_ami" "amazon_linux" {
   most_recent = true
@@ -42,7 +33,6 @@ resource "aws_instance" "employee-webapp" {
     pip3 install -r requirements.txt
     amazon-linux-extras install epel
     yum -y install stress
-    export PHOTOS_BUCKET=${SUB_PHOTOS_BUCKET}
     export AWS_DEFAULT_REGION=<INSERT REGION HERE>
     export DYNAMO_MODE=on
     FLASK_APP=application.py /usr/local/bin/flask run --host=0.0.0.0 --port=80
