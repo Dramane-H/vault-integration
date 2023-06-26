@@ -1,7 +1,22 @@
 
+terraform {
+  backend "local" {
+    path = "terraform.tfstate"
+  }
+}
+
+data "terraform_remote_state" "admin" {
+  backend = "local"
+
+  config = {
+    path = var.path
+  }
+}
+
+
 data "vault_aws_access_credentials" "creds" {
-  backend = "aws"
-  role    = "${var.name}-role"
+  backend = data.terraform_remote_state.admin.outputs.backend
+  role    = data.terraform_remote_state.admin.outputs.role
   region  = var.region
 }
 
