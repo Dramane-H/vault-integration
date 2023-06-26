@@ -9,9 +9,21 @@ resource "vault_aws_secret_backend_role" "vault-ec2-admin" {
     {
       "Effect": "Allow",
       "Action": [
-        "iam:*", "ec2:*"
+        "iam:*", "ec2:*",
+        "iam:CreateAccessKey",
+        "iam:CreateUser",
+        "iam:PutUserPolicy",
+        "iam:ListGroupsForUser",
+        "iam:ListUserPolicies",
+        "iam:ListAccessKeys",
+        "iam:DeleteAccessKey",
+        "iam:DeleteUserPolicy",
+        "iam:RemoveUserFromGroup",
+        "iam:DeleteUser"
       ],
-      "Resource": "*"
+      "Resource": [
+                "arn:aws:iam::redacted-account-number:user/vault-*"
+            ]
     }
   ]
 }
