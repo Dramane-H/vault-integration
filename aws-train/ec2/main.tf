@@ -20,7 +20,7 @@ data "vault_aws_access_credentials" "creds" {
   region  = var.region
 }
 
-data "aws_ami" "amazon_linux" {
+/* data "aws_ami" "amazon_linux" {
   most_recent = true
 
   filter {
@@ -52,6 +52,6 @@ resource "aws_instance" "employee-webapp" {
     export DYNAMO_MODE=on
     FLASK_APP=application.py /usr/local/bin/flask run --host=0.0.0.0 --port=80
   EOF
-}
+} */
 
 

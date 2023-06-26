@@ -1,5 +1,5 @@
 variable "aws_access_key" {}
-variable "aws_secret_key" {}
+variable "aws_secret_key"{}
 variable "name" { default = "vault-ec2-admin"}
 variable "role" { default = "vault-ec2-admin"}
 variable "region" { default = "eu-west-3"}
