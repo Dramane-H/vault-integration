@@ -1,10 +1,29 @@
+/* resource "aws_iam_instance_profile" "test_profile" {
+  name = "test_profile"
+  role = aws_iam_role.role.name
+}
 
-/* terraform {
-  backend "local" {
-    path = "terraform.tfstate"
+data "aws_iam_policy_document" "assume_role" {
+  statement {
+    effect = "Allow"
+
+    principals {
+      type        = "Service"
+      identifiers = ["ec2.amazonaws.com"]
+    }
+
+    actions = ["sts:AssumeRole"]
   }
 }
- */
+
+resource "aws_iam_role" "role" {
+  name               = "test_role"
+  path               = "/"
+  assume_role_policy = data.aws_iam_policy_document.assume_role.json
+} */
+
+
+
 data "terraform_remote_state" "admin" {
   backend = "local"
 
@@ -40,6 +59,8 @@ resource "aws_instance" "employee-webapp" {
   ami           = data.aws_ami.amazon_linux.id
   instance_type = "t2.micro"
 
+  depends_on = [aws_internet_gateway.gw]
+
   user_data = <<-EOF
     wget https://aws-tc-largeobjects.s3-us-west-2.amazonaws.com/DEV-AWS-MO-GCNv2/FlaskApp.zip
     unzip FlaskApp.zip
@@ -48,6 +69,7 @@ resource "aws_instance" "employee-webapp" {
     pip3 install -r requirements.txt
     amazon-linux-extras install epel
     yum -y install stress
+    export PHOTOS_BUCKET=${SUB_PHOTOS_BUCKET}
     export AWS_DEFAULT_REGION=<INSERT REGION HERE>
     export DYNAMO_MODE=on
     FLASK_APP=application.py /usr/local/bin/flask run --host=0.0.0.0 --port=80
