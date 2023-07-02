@@ -1,25 +1,25 @@
 module "ec2" {
-  
+  source = "github.com/username/repository"
 }
 
 module "network" {
-  
+  source = "github.com/username/repository"
 }
 
 module "vault" {
-  
+  source = "github.com/username/repository"
 }
 
 module "s3" {
-  
+  source = "github.com/username/repository"
 }
 
 module "ha-scaling" {
-  
+  source = "github.com/username/repository"
 }
 
 module "monitor" {
-  
+  source = "github.com/username/repository"
 }
 
 resource "aws_prometheus_workspace" "demo" {
