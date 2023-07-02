@@ -1,8 +1,8 @@
 module "ec2" {
-  source = "github.com/username/repository"
+  source = "github.com/Dramane-H/vault-integration/tree/week-4/aws-train/modules/ec2"
 }
 
-module "network" {
+/* module "network" {
   source = "github.com/username/repository"
 }
 
@@ -40,4 +40,4 @@ alertmanager_config: |
   receivers:
     - name: 'default'
 EOF
-}
+} */
