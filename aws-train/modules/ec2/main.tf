@@ -28,7 +28,7 @@ data "terraform_remote_state" "admin" {
   backend = "local"
 
   config = {
-    path = "../modules/vaults/terraform.tfstate"
+    path = "../vaults/terraform.tfstate"
   }
 }
 
@@ -59,7 +59,9 @@ resource "aws_instance" "employee-webapp" {
   ami           = data.aws_ami.amazon_linux.id
   instance_type = "t2.micro"
 
-  depends_on = [aws_internet_gateway.gw]
+  # depends_on = [aws_internet_gateway.gw]
+  # export PHOTOS_BUCKET=${SUB_PHOTOS_BUCKET}   to put this in the instance user data
+
 
   user_data = <<-EOF
     wget https://aws-tc-largeobjects.s3-us-west-2.amazonaws.com/DEV-AWS-MO-GCNv2/FlaskApp.zip
@@ -69,7 +71,6 @@ resource "aws_instance" "employee-webapp" {
     pip3 install -r requirements.txt
     amazon-linux-extras install epel
     yum -y install stress
-    export PHOTOS_BUCKET=${SUB_PHOTOS_BUCKET}
     export AWS_DEFAULT_REGION=<INSERT REGION HERE>
     export DYNAMO_MODE=on
     FLASK_APP=application.py /usr/local/bin/flask run --host=0.0.0.0 --port=80
